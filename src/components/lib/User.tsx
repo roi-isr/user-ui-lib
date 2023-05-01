@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import UserDialog from "../UI/dialog/UserDialog";
@@ -10,37 +10,90 @@ import FormControl from "@mui/material/FormControl";
 
 import style from "./User.module.scss";
 
+function editUserReducer(
+  state: object,
+  action: { type: string; value: string }
+) {
+  const stateClone = structuredClone(state);
+  switch (action.type) {
+    case "name" || "email":
+      stateClone[action.type] = action.value;
+      break;
+    case "country" || "city" || "street":
+      stateClone.location[action.type] = action.value;
+      break;
+  }
+  return stateClone;
+}
+
 function User({ user }: { user: userType }) {
   const { country, city, street } = user.location;
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [editedUser, dispatchEditedUser] = useReducer(
+    editUserReducer,
+    structuredClone(user)
+  );
 
   const editDialog = (
     <UserDialog
       title="Edit User"
       closeHandler={() => setShowEditDialog(false)}
-      saveHandler={() => setShowEditDialog(false)}
+      approveHandler={() => {
+        console.log(editedUser);
+        setShowEditDialog(false);
+      }}
     >
       <div className={style.dialog}>
         <FormControl>
           <InputLabel htmlFor="name">Name</InputLabel>
-          <Input id="name" value={user.name} />
+          <Input
+            id="name"
+            value={editedUser.name}
+            onChange={(e) =>
+              dispatchEditedUser({ type: "name", value: e.target.value })
+            }
+          />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <Input id="email" value={user.email} />
+          <Input
+            id="email"
+            value={editedUser.email}
+            onChange={(e) =>
+              dispatchEditedUser({ type: "email", value: e.target.value })
+            }
+          />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="country">Country</InputLabel>
-          <Input id="country" value={user.location.country} />
+          <Input
+            id="country"
+            value={editedUser.location.country}
+            onChange={(e) =>
+              dispatchEditedUser({ type: "country", value: e.target.value })
+            }
+          />
         </FormControl>
         <FormControl>
           <InputLabel htmlFor="city">City</InputLabel>
-          <Input id="city" value={user.location.city} />
+          <Input
+            id="city"
+            value={editedUser.location.city}
+            onChange={(e) =>
+              dispatchEditedUser({ type: "city", value: e.target.value })
+            }
+          />
         </FormControl>
         <FormControl>
-          <InputLabel htmlFor="streen">Street</InputLabel>
-          <Input id="streen" value={user.location.street} />
+          <InputLabel htmlFor="street">Street</InputLabel>
+          <Input
+            id="street"
+            value={editedUser.location.street}
+            onChange={(e) =>
+              dispatchEditedUser({ type: "street", value: e.target.value })
+            }
+          />
         </FormControl>
       </div>
     </UserDialog>
@@ -50,9 +103,9 @@ function User({ user }: { user: userType }) {
     <UserDialog
       title="Create New User"
       closeHandler={() => setShowDeleteDialog(false)}
-      saveHandler={() => setShowEditDialog(false)}
+      approveHandler={() => setShowDeleteDialog(false)}
     >
-      <div>111</div>
+      <div>Delete user {user.name}?</div>
     </UserDialog>
   );
 
