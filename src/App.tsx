@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./components/UI/Layout/Layout";
+import Layout from "./components/UI/layout/Layout";
 import Header from "./components/UI/header/Header";
 import UsersLayout from "./components/lib/UsersLayout";
 import mockResponse from "./tmp/MockResponse.json";
