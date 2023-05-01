@@ -7,7 +7,7 @@ type props = {
 
 function Layout({children}: props) {
   return (
-    <div className={style.layout__div}>
+    <div className={style.layout}>
       {children}
     </div>
   );
