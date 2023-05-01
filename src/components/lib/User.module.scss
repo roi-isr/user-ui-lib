@@ -2,7 +2,7 @@
   width: 80%;
   height: auto;
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, auto);
   justify-items: center;
   align-items: center;
@@ -10,9 +10,37 @@
   text-align: center;
   border: 1px solid hsl(40, 4%, 15%);
   border-radius: 10px;
+  padding: 10px;
+}
+
+.editBtn {
+  grid-row: 5 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.deleteBtn {
+  grid-row: 5 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.email {
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 4;
+}
+
+.address {
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 4;
+}
+
+.name {
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 4;
 }
 
 .image {
   aspect-ratio: 1/1;
   border-radius: 50%;
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 4;
 }
