@@ -44,3 +44,11 @@
   grid-row: 2 / span 1;
   grid-column: 1 / span 4;
 }
+
+.dialog {
+  height: 500px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
