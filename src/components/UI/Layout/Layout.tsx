@@ -2,7 +2,7 @@ import React from 'react';
 import style from './Layout.module.scss'
 
 type props = {
-    children: JSX.Element[]
+    children: JSX.Element | JSX.Element[]
 }
 
 function Layout({children}: props) {
