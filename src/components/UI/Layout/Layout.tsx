@@ -1,16 +1,10 @@
-import React from 'react';
-import style from './Layout.module.scss'
+import React from "react";
+import { layoutType } from "../../../types";
 
-type props = {
-    children: JSX.Element | JSX.Element[]
-}
+import style from "./Layout.module.scss";
 
-function Layout({children}: props) {
-  return (
-    <div className={style.layout}>
-      {children}
-    </div>
-  );
+function Layout({ children }: layoutType) {
+  return <div className={style.layout}>{children}</div>;
 }
 
 export default Layout;
