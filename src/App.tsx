@@ -1,11 +1,13 @@
 import React from 'react';
-import './App.module.scss';
+import Layout from './components/UI/Layout/Layout';
+
+import styles from'./App.module.scss';
 
 function App() {
   return (
-    <div className="App">
-      H
-    </div>
+    <Layout>
+      <div>1</div>
+    </Layout>
   );
 }
 
