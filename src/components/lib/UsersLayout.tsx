@@ -7,7 +7,8 @@ import style from "./UsersLayout.module.scss";
 function UsersLayout({ users }: { users: userType[] }) {
   return (
     <div className={style.layout}>
-      {users && users.map((user) => <User user={user} />)}
+      {users &&
+        users.map((user) => <User key={user.uuid || user.email} user={user} />)}
     </div>
   );
 }
