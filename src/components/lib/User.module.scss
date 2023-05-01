@@ -1,6 +1,6 @@
 .card {
   width: 80%;
-  height: 80%;
+  height: auto;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: repeat(5, auto);

@@ -10,7 +10,7 @@ const userResponseCleaner = (users: any) => {
       location: {
         country: user.location.country,
         city: user.location.city,
-        street: `${user.location.street.number}, ${user.location.street.name}`,
+        street: `${user.location.street.number} ${user.location.street.name}`,
       },
       uuid: user.id.value,
     };
