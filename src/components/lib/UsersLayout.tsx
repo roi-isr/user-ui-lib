@@ -1,25 +1,25 @@
-import React from 'react';
-
-import style from './UsersLayout.module.scss'
+import React from "react";
+import User from "./User";
+import style from "./UsersLayout.module.scss";
 
 type props = {
-    users: {
-        name: string,
-        email: string,
-        image_url: string,
-        location: {
-            country: string,
-            city: string,
-            street: string
-        },
-        uuid: string
-    }[]
-}
+  users: {
+    name: string;
+    email: string;
+    image_url: string;
+    location: {
+      country: string;
+      city: string;
+      street: string;
+    };
+    uuid: string;
+  }[];
+};
 
-function UsersLayout({users}: props) {
+function UsersLayout({ users }: props) {
   return (
     <div className={style.layout}>
-      {users.map(user => <h1>{user.name}</h1>)}
+      {users && users.map((user) => <User user={user} />)}
     </div>
   );
 }
