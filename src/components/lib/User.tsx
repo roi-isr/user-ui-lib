@@ -4,6 +4,9 @@ import Button from "@mui/material/Button";
 import UserDialog from "../UI/dialog/UserDialog";
 import { userType } from "../../types";
 import Input from "@mui/material/Input";
+import { useDispatch } from "react-redux";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { updateUser, deleteUser } from "../../features/users/usersSlice";
 import InputLabel from "@mui/material/InputLabel";
 
 import FormControl from "@mui/material/FormControl";
@@ -15,18 +18,16 @@ function editUserReducer(
   action: { type: string; value: string }
 ) {
   const stateClone = structuredClone(state);
-  switch (action.type) {
-    case "name" || "email":
-      stateClone[action.type] = action.value;
-      break;
-    case "country" || "city" || "street":
-      stateClone.location[action.type] = action.value;
-      break;
+  if (["name", "email"].includes(action.type)) {
+    stateClone[action.type] = action.value;
+  } else if (["country", "city", "street"].includes(action.type)) {
+    stateClone.location[action.type] = action.value;
   }
   return stateClone;
 }
 
 function User({ user }: { user: userType }) {
+  const fieldsToEdit = ["Name", "Email", "Country", "City", "Street"];
   const { country, city, street } = user.location;
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -34,76 +35,50 @@ function User({ user }: { user: userType }) {
     editUserReducer,
     structuredClone(user)
   );
+  const usersDispatch = useDispatch();
+
+  const approveDialog = (action: PayloadAction<any, any>) => {
+    usersDispatch(action);
+    setShowEditDialog(false);
+    setShowDeleteDialog(false);
+  };
 
   const editDialog = (
     <UserDialog
       title="Edit User"
       closeHandler={() => setShowEditDialog(false)}
-      approveHandler={() => {
-        console.log(editedUser);
-        setShowEditDialog(false);
-      }}
+      approveHandler={() => approveDialog(updateUser(editedUser))}
     >
       <div className={style.dialog}>
-        <FormControl>
-          <InputLabel htmlFor="name">Name</InputLabel>
-          <Input
-            id="name"
-            value={editedUser.name}
-            onChange={(e) =>
-              dispatchEditedUser({ type: "name", value: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <Input
-            id="email"
-            value={editedUser.email}
-            onChange={(e) =>
-              dispatchEditedUser({ type: "email", value: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="country">Country</InputLabel>
-          <Input
-            id="country"
-            value={editedUser.location.country}
-            onChange={(e) =>
-              dispatchEditedUser({ type: "country", value: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="city">City</InputLabel>
-          <Input
-            id="city"
-            value={editedUser.location.city}
-            onChange={(e) =>
-              dispatchEditedUser({ type: "city", value: e.target.value })
-            }
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="street">Street</InputLabel>
-          <Input
-            id="street"
-            value={editedUser.location.street}
-            onChange={(e) =>
-              dispatchEditedUser({ type: "street", value: e.target.value })
-            }
-          />
-        </FormControl>
+        {fieldsToEdit.map((fieldName: string) => {
+          return (
+            <FormControl key={fieldName}>
+              <InputLabel htmlFor={fieldName}>{fieldName}</InputLabel>
+              <Input
+                id={fieldName}
+                value={
+                  editedUser[fieldName.toLowerCase()] ||
+                  editedUser.location[fieldName.toLowerCase()]
+                }
+                onChange={(e) =>
+                  dispatchEditedUser({
+                    type: fieldName.toLowerCase(),
+                    value: e.target.value,
+                  })
+                }
+              />
+            </FormControl>
+          );
+        })}
       </div>
     </UserDialog>
   );
 
   const deleteDialog = (
     <UserDialog
-      title="Create New User"
+      title="Delete User"
       closeHandler={() => setShowDeleteDialog(false)}
-      approveHandler={() => setShowDeleteDialog(false)}
+      approveHandler={() => approveDialog(deleteUser(user.uuid))}
     >
       <div>Delete user {user.name}?</div>
     </UserDialog>
