@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { setUsers } from "../features/users/usersSlice";
-import { userType } from "../types";
 
 const userResponseCleaner = (users: any) => {
   return users.results.map((user: any) => {
@@ -21,12 +20,11 @@ const userResponseCleaner = (users: any) => {
 };
 
 export default function useFetchUsers(url: string): void {
-  const users = useSelector((state: RootState) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   async function fetchUsers() {
     let response;

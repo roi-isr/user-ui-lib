@@ -6,7 +6,7 @@ import style from "./Header.module.scss";
 function Header({ title, image_url }: headerType) {
   return (
     <div className={style.wrapper}>
-      {image_url && <img className={style.image} src={image_url}></img>}
+      {image_url && <img alt="" className={style.image} src={image_url}></img>}
       <h1 className={style.title}>{title}</h1>
     </div>
   );

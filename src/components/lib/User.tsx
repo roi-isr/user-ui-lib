@@ -88,7 +88,7 @@ function User({ user }: { user: userType }) {
     <>
       <Card className={style.card} style={{ boxShadow: "1px 1px 7px #000" }}>
         <h1 className={style.name}>{user.name}</h1>
-        <img className={style.image} src={user.image_url}></img>
+        <img className={style.image} alt={user.name} src={user.image_url}></img>
         <h4 className={style.email}>{user.email}</h4>
         <h4 className={style.address}>{`${street}, ${city}, ${country}`}</h4>
         <Button

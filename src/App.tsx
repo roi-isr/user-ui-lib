@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "./components/UI/layout/Layout";
 import Header from "./components/UI/header/Header";
 import UsersLayout from "./components/lib/UsersLayout";
-import mockResponse from "./tmp/MockResponse.json";
 import useFetchUsers from "./hooks/useFetchUsers";
 
 const USERS_URL = "https://randomuser.me/api/?results=10";

@@ -1,9 +1,7 @@
 import React from "react";
 import User from "./User";
-import { userType } from "../../types";
 import { RootState } from "../../app/store";
 import { useSelector } from "react-redux";
-import Button from "@mui/material/Button";
 
 import style from "./UsersLayout.module.scss";
 
