@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../app/store";
+import { setUsers } from "../features/users/usersSlice";
 import { userType } from "../types";
 
 const userResponseCleaner = (users: any) => {
@@ -12,13 +15,14 @@ const userResponseCleaner = (users: any) => {
         city: user.location.city,
         street: `${user.location.street.number} ${user.location.street.name}`,
       },
-      uuid: user.id.value,
+      uuid: crypto.randomUUID(),
     };
   });
 };
 
-export default function useFetchUsers(url: string): [userType[], Function] {
-  const [users, setUsers] = useState([]);
+export default function useFetchUsers(url: string): void {
+  const users = useSelector((state: RootState) => state.users);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchUsers();
@@ -32,8 +36,6 @@ export default function useFetchUsers(url: string): [userType[], Function] {
       console.log("Could not fetch users...");
     }
     const users = userResponseCleaner(await response?.json());
-    setUsers(users);
+    dispatch(setUsers(users));
   }
-
-  return [users, setUsers];
 }
