@@ -10,12 +10,12 @@ import style from "./UserDialog.module.scss";
 
 function UserDialod({
   closeHandler,
-  saveHandler,
+  approveHandler,
   title,
   children,
 }: {
   closeHandler: () => any;
-  saveHandler: () => any;
+  approveHandler: () => any;
   title: string;
   children: JSX.Element | JSX.Element[];
 }) {
@@ -32,8 +32,8 @@ function UserDialod({
         <Button onClick={closeHandler} color="error">
           Cancel
         </Button>
-        <Button onClick={saveHandler} color="success" autoFocus>
-          Save
+        <Button onClick={approveHandler} color="success" autoFocus>
+          Approve
         </Button>
       </DialogActions>
     </Dialog>
